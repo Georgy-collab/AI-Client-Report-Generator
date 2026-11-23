@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Client Report — {{ client_name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    :root {
+      --ink: #102033;
+      --ink-soft: #3a4a5c;
+      --paper: #f3f6f4;
+      --paper-deep: #e7eee9;
+      --line: #c5d2cb;
+      --accent: #0d7a6f;
+      --accent-deep: #06584f;
+      --accent-glow: #b8e4dc;
+      --warm: #c45c26;
+      --warm-soft: #f3e0d4;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Manrope", "Segoe UI", "DejaVu Sans", Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+
+    .page {
+      min-height: 297mm;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 90% 55% at 100% -10%, rgba(13, 122, 111, 0.14), transparent 55%),
+        radial-gradient(ellipse 70% 45% at -15% 85%, rgba(196, 92, 38, 0.08), transparent 50%),
+        linear-gradient(165deg, #f7faf8 0%, var(--paper) 42%, var(--paper-deep) 100%);
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 9mm;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent-deep) 0%, var(--accent) 55%, #1a8f7a 100%);
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      right: -40mm;
+      top: -30mm;
+      width: 120mm;
+      height: 120mm;
+      border-radius: 50%;
+      border: 1px solid rgba(13, 122, 111, 0.12);
+      pointer-events: none;
+    }
+
+    .inner {
+      position: relative;
+      z-index: 1;
+      padding: 16mm 18mm 14mm 22mm;
+    }
+
+    /* ——— Header ——— */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18mm;
+    }
+
+    .brand-block {
+      max-width: 70%;
+    }
+
+    .brand-mark {
+      display: inline-block;
+      margin-bottom: 7px;
+      padding: 3px 0;
+      color: var(--accent-deep);
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .brand {
+      margin: 0;
+      font-family: "Fraunces", Georgia, "Times New Roman", serif;
+      font-size: 26pt;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+
+    .brand em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .tagline {
+      margin: 8px 0 0;
+      max-width: 95mm;
+      color: var(--ink-soft);
+      font-size: 9.5pt;
+    }
+
+    .stamp {
+      text-align: right;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+    }
+
+    .stamp-label {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--accent-deep);
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .stamp-value {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ——— Hero identity ——— */
+    .hero {
+      margin-bottom: 11mm;
+      padding-bottom: 9mm;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-kicker {
+      margin: 0 0 6px;
+      color: var(--warm);
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .client-name {
+      margin: 0 0 8px;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 28pt;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    .topic-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .topic-label {
+      flex: 0 0 auto;
+      color: var(--ink-soft);
+      font-size: 9pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .topic-text {
+      margin: 0;
+      font-size: 12.5pt;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ——— Content layout ——— */
+    .layout {
+      display: table;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 0;
+      table-layout: fixed;
+    }
+
+    .col-main {
+      display: table-cell;
+      width: 62%;
+      vertical-align: top;
+      padding-right: 7mm;
+    }
+
+    .col-side {
+      display: table-cell;
+      width: 38%;
+      vertical-align: top;
+      padding-left: 5mm;
+      border-left: 1px solid var(--line);
+    }
+
+    .section {
+      margin-bottom: 8mm;
+    }
+
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-index {
+      display: inline-block;
+      margin-bottom: 5px;
+      color: var(--accent);
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 14pt;
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    .section-title {
+      margin: 0 0 7px;
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .section-body {
+      margin: 0;
+      font-size: 11pt;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .request-block {
+      padding: 5mm 5.5mm;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(184, 228, 220, 0.35));
+      border-left: 3px solid var(--accent);
+    }
+
+    .steps-block {
+      padding: 5mm 5.5mm;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--warm);
+    }
+
+    .steps-block .section-body {
+      color: var(--ink);
+    }
+
+    /* ——— Side panel ——— */
+    .mood-panel {
+      margin-bottom: 8mm;
+      padding: 6mm 5mm;
+      background: linear-gradient(160deg, var(--accent-deep) 0%, var(--accent) 100%);
+      color: var(--white);
+    }
+
+    .mood-panel .section-title {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .mood-value {
+      margin: 0;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 18pt;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .mood-hint {
+      margin: 8px 0 0;
+      font-size: 8.5pt;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .meta-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .meta-item {
+      margin-bottom: 5.5mm;
+      padding-bottom: 4.5mm;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .meta-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .meta-item .section-title {
+      margin-bottom: 4px;
+    }
+
+    .meta-item p {
+      margin: 0;
+      font-size: 11pt;
+      font-weight: 600;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .quote-mark {
+      display: block;
+      margin-bottom: 2px;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 28pt;
+      line-height: 0.7;
+      color: var(--accent-glow);
+    }
+
+    /* ——— Footer ——— */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 12mm;
+      padding-top: 5mm;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-note {
+      max-width: 120mm;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 8.5pt;
+      line-height: 1.45;
+    }
+
+    .footer-badge {
+      flex: 0 0 auto;
+      margin-left: 8mm;
+      padding: 5px 10px;
+      background: var(--warm-soft);
+      color: var(--warm);
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="inner">
+      <header class="topbar">
+        <div class="brand-block">
+          <span class="brand-mark">Client Intelligence</span>
+          <h1 class="brand">AI Client <em>Report</em></h1>
+          <p class="tagline">Краткий бриф по диалогу: суть запроса, эмоциональный фон и план действий для команды.</p>
+        </div>
+        <div class="stamp">
+          <span class="stamp-label">Сформировано</span>
+          <div class="stamp-value">{{ generated_at }}</div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <p class="hero-kicker">Диалог с клиентом</p>
+        <h2 class="client-name">{{ client_name }}</h2>
+        <div class="topic-row">
+          <span class="topic-label">Тема</span>
+          <p class="topic-text">{{ topic }}</p>
+        </div>
+      </section>
+
+      <div class="layout">
+        <div class="col-main">
+          <section class="section request-block">
+            <span class="section-index">01</span>
+            <h3 class="section-title">Основной запрос</h3>
+            <p class="section-body">{{ main_request }}</p>
+          </section>
+
+          <section class="section steps-block">
+            <span class="section-index" style="color: var(--warm);">02</span>
+            <h3 class="section-title">Следующие шаги</h3>
+            <p class="section-body">{{ next_steps }}</p>
+          </section>
+        </div>
+
+        <aside class="col-side">
+          <div class="mood-panel">
+            <span class="quote-mark">“</span>
+            <h3 class="section-title">Настроение</h3>
+            <p class="mood-value">{{ mood }}</p>
+            <p class="mood-hint">Эмоциональный тон разговора — ориентир для тона ответа менеджера.</p>
+          </div>
+
+          <ul class="meta-list">
+            <li class="meta-item">
+              <h3 class="section-title">Клиент</h3>
+              <p>{{ client_name }}</p>
+            </li>
+            <li class="meta-item">
+              <h3 class="section-title">Фокус разговора</h3>
+              <p>{{ topic }}</p>
+            </li>
+          </ul>
+        </aside>
+      </div>
+
+      <footer class="footer">
+        <p class="footer-note">
+          Отчёт собран автоматически из транскрибации диалога.
+          Текстовый анализ выполнен через ProxyAPI.
+        </p>
+        <div class="footer-badge">Confidential brief</div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

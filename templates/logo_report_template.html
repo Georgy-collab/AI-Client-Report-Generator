@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Logo Brief — {{ company_name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    :root {
+      --ink: #14181f;
+      --ink-soft: #4a5564;
+      --paper: #f5f2eb;
+      --paper-deep: #ebe6dc;
+      --line: #d4ccc0;
+      --accent: #1f4b63;
+      --accent-bright: #2f7ea0;
+      --warm: #c45c26;
+      --warm-soft: #f0ddd0;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Manrope", "Segoe UI", "DejaVu Sans", Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+
+    .page {
+      min-height: 297mm;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 50% at 0% 0%, rgba(47, 126, 160, 0.12), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(196, 92, 38, 0.08), transparent 50%),
+        linear-gradient(170deg, #f8f5ef 0%, var(--paper) 45%, var(--paper-deep) 100%);
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 8mm;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-bright) 60%, #3a9bb8 100%);
+    }
+
+    .inner {
+      position: relative;
+      z-index: 1;
+      padding: 15mm 20mm 14mm 16mm;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12mm;
+    }
+
+    .brand-mark {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--accent-bright);
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .brand {
+      margin: 0;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 24pt;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .brand em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .tagline {
+      margin: 7px 0 0;
+      max-width: 100mm;
+      color: var(--ink-soft);
+      font-size: 9.5pt;
+    }
+
+    .stamp {
+      text-align: right;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+    }
+
+    .stamp-label {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--accent);
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .stamp-value {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 11pt;
+      font-weight: 500;
+    }
+
+    .hero {
+      margin-bottom: 8mm;
+      padding-bottom: 7mm;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-kicker {
+      margin: 0 0 5px;
+      color: var(--warm);
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .company-name {
+      margin: 0 0 4px;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 26pt;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+    }
+
+    .client-line {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 11pt;
+    }
+
+    .layout {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .col-left {
+      display: table-cell;
+      width: 48%;
+      vertical-align: top;
+      padding-right: 6mm;
+    }
+
+    .col-right {
+      display: table-cell;
+      width: 52%;
+      vertical-align: top;
+      padding-left: 5mm;
+    }
+
+    .section {
+      margin-bottom: 5.5mm;
+    }
+
+    .section-title {
+      margin: 0 0 5px;
+      color: var(--ink-soft);
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-body {
+      margin: 0;
+      font-size: 10.5pt;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .chip-row {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .chip-row li {
+      margin-bottom: 3.5mm;
+      padding-bottom: 3mm;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .chip-row li:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .chip-row strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--accent);
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .concept-block {
+      margin-bottom: 5mm;
+      padding: 4.5mm 5mm;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(47,126,160,0.08));
+      border-left: 3px solid var(--accent);
+    }
+
+    .steps-block {
+      padding: 4.5mm 5mm;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--warm);
+    }
+
+    .logo-stage {
+      padding: 5mm;
+      background: var(--white);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .logo-stage-title {
+      margin: 0 0 4mm;
+      color: var(--accent);
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    .logo-frame {
+      display: inline-block;
+      width: 72mm;
+      height: 72mm;
+      padding: 4mm;
+      background:
+        linear-gradient(45deg, #f0eee8 25%, transparent 25%),
+        linear-gradient(-45deg, #f0eee8 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f0eee8 75%),
+        linear-gradient(-45deg, transparent 75%, #f0eee8 75%);
+      background-size: 10px 10px;
+      background-position: 0 0, 0 5px, 5px -5px, -5px 0;
+      border: 1px solid var(--line);
+    }
+
+    .logo-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #ffffff;
+    }
+
+    .logo-missing {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 72mm;
+      height: 72mm;
+      margin: 0 auto;
+      color: var(--ink-soft);
+      background: #faf8f4;
+      border: 1px dashed var(--line);
+      font-size: 9.5pt;
+    }
+
+    .prompt-note {
+      margin: 4mm 0 0;
+      padding-top: 3mm;
+      border-top: 1px dashed var(--line);
+      color: var(--ink-soft);
+      font-size: 8pt;
+      line-height: 1.4;
+      text-align: left;
+      word-wrap: break-word;
+    }
+
+    .mood-strip {
+      margin-top: 7mm;
+      padding: 4mm 5mm;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--white);
+    }
+
+    .mood-strip .section-title {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .mood-strip .section-body {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 14pt;
+      font-weight: 700;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 8mm;
+      padding-top: 4mm;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-note {
+      max-width: 125mm;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 8.5pt;
+      line-height: 1.4;
+    }
+
+    .footer-badge {
+      margin-left: 8mm;
+      padding: 5px 10px;
+      background: var(--warm-soft);
+      color: var(--warm);
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="inner">
+      <header class="topbar">
+        <div>
+          <span class="brand-mark">Brand Workshop</span>
+          <h1 class="brand">Logo <em>Brief</em></h1>
+          <p class="tagline">Отчёт по обсуждению фирменного знака: бриф, стиль и AI-пример логотипа.</p>
+        </div>
+        <div class="stamp">
+          <span class="stamp-label">Сформировано</span>
+          <div class="stamp-value">{{ generated_at }}</div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <p class="hero-kicker">Компания</p>
+        <h2 class="company-name">{{ company_name }}</h2>
+        <p class="client-line">Клиент: {{ client_name }} · Отрасль: {{ industry }}</p>
+      </section>
+
+      <div class="layout">
+        <div class="col-left">
+          <ul class="chip-row">
+            <li>
+              <strong>Ценности бренда</strong>
+              <span>{{ brand_values }}</span>
+            </li>
+            <li>
+              <strong>Стиль</strong>
+              <span>{{ style_preferences }}</span>
+            </li>
+            <li>
+              <strong>Палитра</strong>
+              <span>{{ colors }}</span>
+            </li>
+          </ul>
+
+          <section class="section concept-block" style="margin-top: 5mm;">
+            <h3 class="section-title">Концепция</h3>
+            <p class="section-body">{{ logo_concept }}</p>
+          </section>
+
+          <section class="section steps-block">
+            <h3 class="section-title">Следующие шаги</h3>
+            <p class="section-body">{{ next_steps }}</p>
+          </section>
+        </div>
+
+        <div class="col-right">
+          <div class="logo-stage">
+            <h3 class="logo-stage-title">Пример логотипа (AI)</h3>
+            {% if logo_image_data_uri %}
+              <div class="logo-frame">
+                <img src="{{ logo_image_data_uri }}" alt="Сгенерированный логотип {{ company_name }}" />
+              </div>
+            {% elif logo_image_b64 %}
+              <div class="logo-frame">
+                <img src="data:{{ logo_image_mime|default('image/png') }};base64,{{ logo_image_b64 }}" alt="Сгенерированный логотип {{ company_name }}" />
+              </div>
+            {% else %}
+              <div class="logo-missing">Изображение не сгенерировано</div>
+            {% endif %}
+            <p class="prompt-note"><strong>Prompt:</strong> {{ logo_prompt }}</p>
+          </div>
+
+          <div class="mood-strip">
+            <h3 class="section-title">Настроение клиента</h3>
+            <p class="section-body">{{ mood }}</p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p class="footer-note">
+          Бриф собран из транскрибации обсуждения логотипа.
+          Пример знака сгенерирован через ProxyAPI Images.
+          {% if logo_image_path %}<br />Файл: {{ logo_image_path }}{% endif %}
+        </p>
+        <div class="footer-badge">Logo draft</div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
